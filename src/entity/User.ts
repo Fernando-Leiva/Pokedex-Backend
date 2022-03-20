@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
+import { Pokemon } from "./Pokemon";
 
 @Entity()
 export class User {
@@ -26,5 +27,6 @@ export class User {
 
     @Column('text',{nullable:true})
     trainerClass:string
+
 
 }

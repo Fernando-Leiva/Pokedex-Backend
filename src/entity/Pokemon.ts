@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn, ManyToMany, JoinTable} from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn, ManyToMany, JoinTable } from "typeorm"
 import { Move } from "./Move"
+import { User } from "./User"
 
 @Entity()
 export class Pokemon{
@@ -21,4 +22,8 @@ export class Pokemon{
 
     @Column("text",{nullable:true})
     picture: string
+
+    @ManyToMany(()=>User, user => user.id ,{nullable:true})
+    @JoinTable()
+    users: User[]
 }
