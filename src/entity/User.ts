@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, JoinTable} from "typeorm";
 import { Pokemon } from "./Pokemon";
 
 @Entity()
@@ -27,6 +27,8 @@ export class User {
 
     @Column('text',{nullable:true})
     trainerClass:string
-
+    @ManyToMany(()=>Pokemon, pokemon => pokemon.name,{nullable:true})
+    @JoinTable()
+    pokemons: Pokemon[]
 
 }

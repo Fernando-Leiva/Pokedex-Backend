@@ -57,6 +57,13 @@ createConnection().then(async connection => {
          } 
     }
  */
+    app.post('/user',(req:Request, res:Response, next:Function)=>{
+        console.log('Si llegamos')
+        controller.one(req,res,next)
+        .then(result => res.json(result))
+        .catch(error => console.log(error))
+    })
+
     app.post('/users',(req: Request, res: Response, next: Function)=>{
         controller.save(req, res, next)
         .then(result => res.json(result))
@@ -74,16 +81,27 @@ createConnection().then(async connection => {
         .catch(error => console.error(error))
     })
 
-    app.post('/pokemon',(req:Request,res:Response,next:Function)=>{
+    app.get('/pokemon',(req:Request, res:Response, next:Function)=>{
+        pokemonController.all(req,res,next)
+        .then(result => res.json(result))
+        .catch(error => console.error(error))
+    })
+    app.post('/myPokedex',(req:Request,res:Response,next:Function)=>{
+        console.log('Pokedex')
+        pokemonController.getMyPokemon(req,res,next)
+        .then(result => res.json(result))
+        .catch(error => console.log(error))
+    })
+
+    app.put('/pokemon',(req:Request,res:Response,next:Function)=>{
         pokemonController.saveToPokedex(req,res,next)
         .then(resul => res.json(resul))
         .catch(error => console.error(error))
     })
     
-    // start express server
     app.listen(4000);
     
-    console.log("Express server has started on port 3000. Open http://localhost:4000/users to see results");
+    console.log("Express server has started on port 4000.");
     
 }).catch(error => console.log(error));
 

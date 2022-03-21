@@ -23,7 +23,5 @@ export class Pokemon{
     @Column("text",{nullable:true})
     picture: string
 
-    @ManyToMany(()=>User, user => user.id ,{nullable:true})
-    @JoinTable()
-    users: User[]
+  
 }

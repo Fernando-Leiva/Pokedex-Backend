@@ -11,11 +11,11 @@ export class UserController {
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.findOne(request.params.id);
+        console.log('-----',await this.userRepository.findOne({where:{email:request.body.email}}))
+        return this.userRepository.findOne({where:{email:request.body.email}});
     }
 
     async save(request: Request, response: Response, next: NextFunction) {
-        console.log("Vamos a guardar",request.body)
         return this.userRepository.save(request.body);
     }
 

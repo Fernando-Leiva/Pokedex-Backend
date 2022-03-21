@@ -7,22 +7,26 @@ export class PokemonController {
     private pokemonRepository = getRepository(Pokemon)
     private userRepository = getRepository(User)
     
-
+    // Function that gets all pokemon in DB.
     async all(request: Request, response: Response, next: NextFunction) {
         return this.pokemonRepository.find();
     }
 
+    //Function that gets all pokemon from my owernship.
     async getMyPokemon(request:Request, response:Response, next:NextFunction){
-        const user = await this.userRepository.find({where:{email:request.body.email}})
+        console.log(request.body)
        // const myPokemons = await this.pokemonRepository.find({where:{user:user}})
-        return this.pokemonRepository.find({where:{user:user}})
+        return this.userRepository.find({where:{email:request.body.email},relations:['pokemons']})
     }
 
+    // Function that saves a pokemon as my owned.
     async saveToPokedex(request: Request, response: Response, next: NextFunction) {
-        const user = await this.userRepository.find({where:{email:request.body.email}})
+        const user = await this.userRepository.find({where:{email:request.body.email},relations:['pokemons']})
         const pokemon =  await this.pokemonRepository.find({where:{name:request.body.name}})
-        return this.pokemonRepository.update({id:user[0].id},{ users : pokemon[0].users.concat(user) });
+        user[0].pokemons = user[0].pokemons.concat(pokemon)
+        return this.userRepository.save(user[0])
     }
+    // Function that saves the pokemon in the DB.
     async save(data) {
         return this.pokemonRepository.save(data);
     }
