@@ -21,7 +21,7 @@ export class Pokemon{
     moves: Move[]
 
     @Column("text",{nullable:true})
-    picture: string
+    image: string
 
   
 }
